@@ -49,8 +49,8 @@ const ITEM_CONFIG = [
 
 //특수 아이템
 const SPECIAL_ITEM_CONFIG = [
-  { width: 50 / 1.5, height: 50 / 1.5, id: 1, image: 'images/specialItems/flower.png' },
-  { width: 50 / 1.5, height: 50 / 1.5, id: 2, image: 'images/specialItems/Star.png' },
+  { width: 50 / 1.5, height: 50 / 1.5, id: 1, image: 'images/items/flower.png' },
+  { width: 50 / 1.5, height: 50 / 1.5, id: 2, image: 'images/items/Star.png' },
 ];
 
 // 게임 요소들

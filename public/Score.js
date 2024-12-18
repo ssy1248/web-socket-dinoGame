@@ -43,21 +43,49 @@ class Score {
   }
 
   getItem(itemId) {
-    let currentItem = itemsData.data.find((e) => e.id === itemId);
-    if(!currentItem) {
-      console.log("없는 아이템입니다.");
-    } else {
-      this.score += currentItem.score;
+    const combinedItems = [
+      ...itemsData.data.map((item) => ({ ...item, type: "normal" })),
+      ...specialItemData.data.map((item) => ({ ...item, type: "special" })),
+    ];
 
+    console.log("Combined Items:", combinedItems);
+    console.log("Received itemId:", itemId, typeof itemId);
+
+    const foundItem = combinedItems.find((item) => item.id === Number(itemId));
+
+    console.log("Get Item ", foundItem);
+
+    if(!foundItem) {
+      console.log("not found Item");
+      return;
+    } 
+
+    if (foundItem.type === "special") {
+      console.log("특수 아이템 획득: ", foundItem.description);
+  
       sendEvent(12, {
         currentStageId: this.stageId,
-        itemId: currentItem.id,
-        itemScore: currentItem.score,
+        itemId: foundItem.id,
+        itemType: foundItem.type,
+        description: foundItem.description,
+        duration: foundItem.duration,
         currentScore: this.score,
         timestamp: Date.now(),
       });
-
-      console.log("아이템 획득 ", currentItem.score, this.itemController.currentStageId);
+    } else if (foundItem.type === "normal") {
+      this.score += foundItem.score;
+  
+      //sendEvent를 보낼 때 currentScore를 보내는 것이 아닌 itemId와 ItemType, itemScore를 보내서 서버에서 검사
+      sendEvent(12, {
+        currentStageId: this.stageId,
+        itemId: foundItem.id,
+        itemType: foundItem.type,
+        itemScore: foundItem.score,
+        currentScore: this.score,
+        timestamp: Date.now(),
+      });
+  
+      console.log("아이템 획득 ", foundItem.score);
     }
   }
 

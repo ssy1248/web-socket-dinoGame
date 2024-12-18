@@ -67,6 +67,12 @@ class ItemController {
     if(specialItem) {
       specialItem = specialItem.special_item_id;
       const specialItemImages = this.specialItemImages.filter((e) => specialItem.includes(e.id));
+
+      if (specialItemImages.length === 0) {
+        console.warn("No matching special item images found");
+        return; 
+      }
+
       const index = this.getRandomNumber(0, this.specialItemImages.length - 1);
       const itemInfo = specialItemImages[index];
       const x = this.canvas.width * 1.5;
@@ -112,6 +118,7 @@ class ItemController {
     this.specialItems.forEach((item) => item.draw());
   }
 
+  //collideWith 함수 부분 수정
   collideWith(sprite) {
     const collidedItem = this.items.find((item) => item.collideWith(sprite));
     if (collidedItem) {
