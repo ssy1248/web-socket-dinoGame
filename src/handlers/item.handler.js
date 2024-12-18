@@ -17,7 +17,6 @@ export const getItemHandler = async (userId, payload) => {
   const lastItemLog = currentItemLog[currentItemLog.length - 1];
 
   if (lastItemLog) {
-    // TODO: 3초 - 수정 예정
     if (Math.abs((payload.timestamp - lastItemLog.timestamp) / 1000) < 3) {
       return { status: 'fail', message: 'player Error' };
     }
@@ -36,4 +35,9 @@ export const getItemHandler = async (userId, payload) => {
   setItemLog(userId, payload.currentStageId, payload.itemId, payload.itemScore, payload.timestamp);
 
   return { status: 'success', message: `get Item ${payload.itemId} +${payload.itemScore}` };
+};
+
+export const getSpecialItemHandler = async (userId, payload) => {
+  
+  return { status: 'success', message: `Get Special Item ${payload.specialItemId} +${payload.specialItemScore}` };
 };

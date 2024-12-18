@@ -16,13 +16,11 @@ export const initRank = async () => {
 
 // 최고 점수 조회
 export const getHighScore = async () => {
-  // return rank['highScore'];
   const highScore = await redisClient.get(HIGHSCORE_KEY_PREFIX);
   return JSON.parse(highScore);
 };
 
 export const getHighScorerCoords = async () => {
-  // return rank['highScore'];
   const coords = await redisClient.lRange(HIGHSCORECOORDS_KEY_PREFIX, 0, -1);
   coords.forEach((e) => JSON.parse(e));
   return coords;
@@ -30,14 +28,13 @@ export const getHighScorerCoords = async () => {
 
 // 최고 점수 조회
 export const setHighScore = async (score, userId, coords) => {
-  // rank['highScore'] = { score, userId };
   await redisClient.set(HIGHSCORE_KEY_PREFIX, JSON.stringify({ score, userId }), { EX: TTL });
   coords.forEach(async (e) => {
     await redisClient.rPush(HIGHSCORECOORDS_KEY_PREFIX, JSON.stringify(e), { EX: TTL });
   });
 };
 
-// 랭킹 조회
+// 랭킹 조회s
 export const getRankList = async () => {
   const arr = await redisClient.keys(RANK_KEY_PREFIX + '*');
   const ranks = [];

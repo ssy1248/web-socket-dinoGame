@@ -8,6 +8,7 @@ import { sendEvent } from './Socket.js';
 import items from './assets/item.json' with { type: 'json' };
 
 import ITEM_UNLOCK from './assets/item_unlock.json' with { type: 'json' };
+import SPECIAL_ITEM_UNLOCK from './assets/special_item_unlock.json' with { type: 'json' };
 
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
@@ -19,7 +20,7 @@ const GAME_SPEED_INCREMENT = 0.00001;
 const GAME_WIDTH = 800;
 const GAME_HEIGHT = 200;
 
-// 플레이어
+// 플레이어 
 // 800 * 200 사이즈의 캔버스에서는 이미지의 기본크기가 크기때문에 1.5로 나눈 값을 사용. (비율 유지)
 const PLAYER_WIDTH = 88 / 1.5; // 58
 const PLAYER_HEIGHT = 94 / 1.5; // 62
@@ -44,6 +45,12 @@ const ITEM_CONFIG = [
   { width: 50 / 1.5, height: 50 / 1.5, id: 2, image: 'images/items/pokeball_yellow.png' },
   { width: 50 / 1.5, height: 50 / 1.5, id: 3, image: 'images/items/pokeball_purple.png' },
   { width: 50 / 1.5, height: 50 / 1.5, id: 4, image: 'images/items/pokeball_cyan.png' },
+];
+
+//특수 아이템
+const SPECIAL_ITEM_CONFIG = [
+  { width: 50 / 1.5, height: 50 / 1.5, id: 1, image: 'images/specialItems/flower.png' },
+  { width: 50 / 1.5, height: 50 / 1.5, id: 2, image: 'images/specialItems/Star.png' },
 ];
 
 // 게임 요소들
@@ -108,7 +115,18 @@ function createSprites() {
     };
   });
 
-  itemController = new ItemController(ctx, itemImages, scaleRatio, GROUND_SPEED, ITEM_UNLOCK);
+  const specialItemImages = SPECIAL_ITEM_CONFIG.map((item) => {
+    const image = new Image();
+    image.src = item.image;
+    return {
+      image,
+      id: item.id,
+      width: item.width * scaleRatio,
+      height: item.height * scaleRatio,
+    };
+  });
+
+  itemController = new ItemController(ctx, itemImages, specialItemImages, scaleRatio, GROUND_SPEED, ITEM_UNLOCK, SPECIAL_ITEM_UNLOCK);
 
   score = new Score(ctx, scaleRatio);
 }
@@ -218,6 +236,7 @@ function gameLoop(currentTime) {
     score.update(deltaTime, itemController);
   }
 
+  //충돌 처리
   if (!gameover && cactiController.collideWith(player)) {
     gameover = true;
     score.setHighScore(player_coords);

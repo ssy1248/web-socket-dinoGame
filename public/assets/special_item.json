@@ -1,0 +1,18 @@
+{
+    "name": "special_item",
+    "version": "1.0.0",
+    "data": [
+    {
+      "id": 1,
+      "type": "damage_shield",
+      "description": "Blocks one instance of damage",
+      "duration": 0
+    },
+    {
+      "id": 2,
+      "type": "invincibility",
+      "description": "Grants invincibility for a limited time",
+      "duration": 5
+    }
+  ]
+}

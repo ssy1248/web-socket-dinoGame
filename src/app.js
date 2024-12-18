@@ -5,8 +5,6 @@ import { loadGameAssets } from './init/assets.js';
 import dotenv from 'dotenv';
 import { initRedisClient } from './init/redis.js';
 
-//https://github.com/devbong92/sparta-websocket-dino -> 참고
-
 const app = express();
 const server = createServer(app);
 

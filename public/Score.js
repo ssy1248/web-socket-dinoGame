@@ -1,5 +1,6 @@
 import { sendEvent } from './Socket.js';
 import itemsData from './assets/item.json' with { type: 'json' };
+import specialItemData from './assets/special_item.json' with { type: 'json' };
 import stageData from './assets/stage.json' with { type: 'json' };
 import { FIRST_STAGE_ID } from './Constants.js';
 
