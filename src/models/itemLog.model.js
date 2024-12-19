@@ -21,6 +21,14 @@ export const setItemLog = async (uuid, stageId, itemId, itemScore, timestamp) =>
   );
 };
 
+export const setSpecialItemLog = async (uuid, stageId, itemId, itemDesicription, timestamp) => {
+  await redisClient.rPush(
+    KEY_PREFIX + uuid,
+    JSON.stringify({ stageId, itemId, itemDesicription, timestamp }),
+    { EX: TTL },
+  );
+};
+
 export const clearItemLog = (uuid) => {
   redisClient.del(KEY_PREFIX + uuid);
 };

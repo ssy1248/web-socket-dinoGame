@@ -44,26 +44,19 @@ class Score {
 
   getItem(itemId) {
     const combinedItems = [
-      ...itemsData.data.map((item) => ({ ...item, type: "normal" })),
-      ...specialItemData.data.map((item) => ({ ...item, type: "special" })),
+      ...itemsData.data.map((item) => ({ ...item, type: 'normal' })),
+      ...specialItemData.data.map((item) => ({ ...item, type: 'special' })),
     ];
-
-    console.log("Combined Items:", combinedItems);
-    console.log("Received itemId:", itemId, typeof itemId);
 
     const foundItem = combinedItems.find((item) => item.id === Number(itemId));
 
-    console.log("Get Item ", foundItem);
-
-    if(!foundItem) {
-      console.log("not found Item");
+    if (!foundItem) {
+      console.log('not found Item');
       return;
-    } 
+    }
 
-    if (foundItem.type === "special") {
-      console.log("특수 아이템 획득: ", foundItem.description);
-  
-      sendEvent(12, {
+    if (foundItem.type === 'special') {
+      sendEvent(13, {
         currentStageId: this.stageId,
         itemId: foundItem.id,
         itemType: foundItem.type,
@@ -72,9 +65,11 @@ class Score {
         currentScore: this.score,
         timestamp: Date.now(),
       });
-    } else if (foundItem.type === "normal") {
+
+      console.log('특수 아이템 획득: ', foundItem.description);
+    } else if (foundItem.type === 'normal') {
       this.score += foundItem.score;
-  
+
       //sendEvent를 보낼 때 currentScore를 보내는 것이 아닌 itemId와 ItemType, itemScore를 보내서 서버에서 검사
       sendEvent(12, {
         currentStageId: this.stageId,
@@ -84,8 +79,8 @@ class Score {
         currentScore: this.score,
         timestamp: Date.now(),
       });
-  
-      console.log("아이템 획득 ", foundItem.score);
+
+      console.log('아이템 획득 ', foundItem.score);
     }
   }
 
@@ -96,7 +91,7 @@ class Score {
 
   setHighScore(playerCoords) {
     const highScore = Number(localStorage.getItem(this.HIGH_SCORE_KEY));
-    if(this.score > highScore) {
+    if (this.score > highScore) {
       localStorage.setItem(this.HIGH_SCORE_KEY, Math.floor(this.score));
 
       sendEvent(99, {

@@ -6,14 +6,14 @@
       "id": 51,
       "type": "special",
       "name": "damage_shield",
-      "description": "Blocks one instance of damage",
-      "duration": 0
+      "description": "Grants invincibility for a limited 3 time",
+      "duration": 3
     },
     {
       "id": 52,
       "type": "special",
       "name": "invincibility",
-      "description": "Grants invincibility for a limited time",
+      "description": "Grants invincibility for a limited 5 time",
       "duration": 5
     }
   ]
