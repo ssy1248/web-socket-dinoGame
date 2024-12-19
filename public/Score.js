@@ -43,11 +43,13 @@ class Score {
   }
 
   getItem(itemId) {
+    // 일반, 특수 아이템 정보를 스프레드 오퍼레이터를 통해서 하나로 묶기기
     const combinedItems = [
       ...itemsData.data.map((item) => ({ ...item, type: 'normal' })),
       ...specialItemData.data.map((item) => ({ ...item, type: 'special' })),
     ];
 
+    // 하나에 모아놓은 정보의 아이템에서 획득한 아이템 정보 조회회
     const foundItem = combinedItems.find((item) => item.id === Number(itemId));
 
     if (!foundItem) {
@@ -55,6 +57,7 @@ class Score {
       return;
     }
 
+    //아이템의 타입에 따른 sendEvent
     if (foundItem.type === 'special') {
       sendEvent(13, {
         currentStageId: this.stageId,
@@ -70,7 +73,6 @@ class Score {
     } else if (foundItem.type === 'normal') {
       this.score += foundItem.score;
 
-      //sendEvent를 보낼 때 currentScore를 보내는 것이 아닌 itemId와 ItemType, itemScore를 보내서 서버에서 검사
       sendEvent(12, {
         currentStageId: this.stageId,
         itemId: foundItem.id,

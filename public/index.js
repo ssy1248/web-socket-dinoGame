@@ -269,6 +269,7 @@ function gameLoop(currentTime) {
     }
   }
 
+  // 충돌 아이템 처리
   const collideWithItem = itemController.collideWith(player);
   if (collideWithItem) {
     const { itemId, itemType, timeStamp } = collideWithItem;
@@ -283,7 +284,6 @@ function gameLoop(currentTime) {
       }
     } else if (itemType === 'normal') {
       console.log('일반 아이템 충돌! itemId:', itemId);
-      // 일반 아이템 점수 처리
     }
 
     // 아이템 점수/효과 처리
