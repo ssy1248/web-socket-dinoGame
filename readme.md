@@ -1,6 +1,7 @@
 # 웹소켓 게임 만들기
 
 ## 파일 구조
+```txt
 Project Root
 ├── public (Client)
 │   ├── assets
@@ -42,6 +43,7 @@ Project Root
 │   │   ├── user.model.js
 │   ├── app.js
 │   ├── constants.js
+```
 
 ---------------------------------------
 
