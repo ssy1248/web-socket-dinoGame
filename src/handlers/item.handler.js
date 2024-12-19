@@ -22,13 +22,16 @@ export const getItemHandler = async (userId, payload) => {
     }
   }
 
-  const { itemUnlocks } = getGameAssets();
+  const { items, itemUnlocks } = getGameAssets();
   const currentStageData = itemUnlocks.data.find((e) => e.stage_id === payload.currentStageId);
+  const currentItemData = items.data.find((e) => e.id === payload.itemId);
 
   if (!currentStageData) {
     return { status: 'fail', message: '잘못된 획득 아이템 스테이지 정보' };
   } else if (!currentStageData.item_id.includes(payload.itemId)) {
     return { status: 'fail', message: '해당 스테이지에서 얻을 수 없는 아이템 정보' };
+  } else if (currentItemData.score !== payload.itemScore) {
+    return { status: 'fail', message: '아이템 점수가 다릅니다' };
   }
 
   // 아이템 이력 저장
@@ -56,13 +59,16 @@ export const getSpecialItemHandler = async (userId, payload) => {
     }
   }
 
-  const { specialItemUnlocks } = getGameAssets();
+  const { specialItem, specialItemUnlocks } = getGameAssets();
   const currentStageData = specialItemUnlocks.data.find((e) => e.stage_id === payload.currentStageId);
+  const currentSpecialItemData = specialItem.data.find((e) => e.id === payload.itemID);
 
   if (!currentStageData) {
     return { status: 'fail', message: '잘못된 획득 아이템 스테이지 정보' };
   } else if (!currentStageData.special_item_id.includes(payload.itemId)) {
     return { status: 'fail', message: '해당 스테이지에서 얻을 수 없는 아이템 정보' };
+  } else if (currentSpecialItemData.duration !== payload.duration) {
+    return { status: 'fail', message: '해당 아이템의 지속 시간이 다릅니다.' };
   }
 
   // 아이템 이력 저장
